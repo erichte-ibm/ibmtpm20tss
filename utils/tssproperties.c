@@ -322,7 +322,7 @@ static TPM_RC TSS_SetTraceLevel(const char *value)
 	    value = TPM_TRACE_LEVEL_DEFAULT;
 	}
     }
-#ifndef __ULTRAVISOR__
+#if !defined(__ULTRAVISOR__) && !defined(TPM_SKIBOOT)
     if (rc == 0) {
 	irc = sscanf(value, "%u", &level);
 	if (irc != 1) {
@@ -388,7 +388,7 @@ static TPM_RC TSS_SetCommandPort(TSS_CONTEXT *tssContext, const char *value)
 	    value = TPM_COMMAND_PORT_DEFAULT;
 	}
     }
-#ifndef __ULTRAVISOR__
+#if !defined(__ULTRAVISOR__) && !defined(TPM_SKIBOOT)
     if (rc == 0) {
 	irc = sscanf(value, "%hu", &tssContext->tssCommandPort);
 	if (irc != 1) {
@@ -418,7 +418,7 @@ static TPM_RC TSS_SetPlatformPort(TSS_CONTEXT *tssContext, const char *value)
 	    value = TPM_PLATFORM_PORT_DEFAULT;
 	}
     }
-#ifndef __ULTRAVISOR__
+#if !defined(__ULTRAVISOR__) && !defined(TPM_SKIBOOT)
    if (rc == 0) {
 	irc = sscanf(value, "%hu", &tssContext->tssPlatformPort);
 	if (irc != 1) {
@@ -520,7 +520,7 @@ static TPM_RC TSS_SetEncryptSessions(TSS_CONTEXT *tssContext, const char *value)
 	    value = TPM_ENCRYPT_SESSIONS_DEFAULT;
 	}
     }
-#ifndef __ULTRAVISOR__
+#if !defined(__ULTRAVISOR__) && !defined(TPM_SKIBOOT)
    if (rc == 0) {
 	irc = sscanf(value, "%u", &tssContext->tssEncryptSessions);
 	if (irc != 1) {

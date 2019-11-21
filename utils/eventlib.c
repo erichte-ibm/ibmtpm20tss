@@ -66,6 +66,7 @@ static void TSS_SpecIdEventAlgorithmSize_Trace(TCG_EfiSpecIdEventAlgorithmSize *
 
  */
 
+#ifndef TPM_SKIBOOT
 int TSS_EVENT_Line_Read(TCG_PCR_EVENT *event,
 			int *endOfFile,
 			FILE *inFile)
@@ -152,6 +153,8 @@ int TSS_EVENT_Line_Read(TCG_PCR_EVENT *event,
     }
     return rc;
 }
+
+#endif /* TPM_SKIBOOT */
 
 /* TSS_EVENT_Line_Marshal() marshals a TCG_PCR_EVENT structure */
 
@@ -380,6 +383,7 @@ static void TSS_SpecIdEventAlgorithmSize_Trace(TCG_EfiSpecIdEventAlgorithmSize *
 }
 
 #ifdef TPM_TPM20
+#ifndef TPM_SKIBOOT
 
 /* TSS_EVENT2_Line_Read() reads a TPM2 event line from a binary file inFile.
 
@@ -529,6 +533,7 @@ int TSS_EVENT2_Line_Read(TCG_PCR_EVENT2 *event,
     }
     return rc;
 }
+#endif /* TPM_SKIBOOT */
 
 /* TSS_EVENT2_Line_Marshal() marshals a TCG_PCR_EVENT2 structure */
 
