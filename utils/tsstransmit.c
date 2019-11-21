@@ -120,11 +120,13 @@ TPM_RC TSS_Transmit(TSS_CONTEXT *tssContext,
 #endif
 	
     if ((strcmp(tssContext->tssInterfaceType, "dev") == 0)) {
+#ifndef TPM_NODEV
 #ifdef TPM_POSIX	/* transmit through Linux device driver */
 	rc = TSS_Dev_Transmit(tssContext,
 			      responseBuffer, read,
 			      commandBuffer, written,
 			      message);
+#endif
 #endif
 
 #ifdef TPM_WINDOWS	/* transmit through Windows TBSI */
@@ -163,8 +165,10 @@ TPM_RC TSS_Close(TSS_CONTEXT *tssContext)
 	else
 #endif
         if ((strcmp(tssContext->tssInterfaceType, "dev") == 0)) {
+#ifndef TPM_NODEV
 #ifdef TPM_POSIX	/* transmit through Linux device driver */
 	    rc = TSS_Dev_Close(tssContext);
+#endif
 #endif
 
 #ifdef TPM_WINDOWS	/* transmit through Windows TBSI */
