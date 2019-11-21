@@ -50,9 +50,15 @@
 #include <ibmtss/tsserror.h>
 #include <ibmtss/tssprint.h>
 
+#ifndef TPM_NODEV
 #ifdef TPM_POSIX
 #include "tssdev.h"
 #endif
+#endif /* TPM_NODEV */
+
+#ifdef TPM_SKIBOOT
+#include "tssdevskiboot.h"
+#endif /* TPM_SKIBOOT */
 
 #ifdef TPM_WINDOWS
 #ifdef TPM_WINDOWS_TBSI
@@ -142,6 +148,17 @@ TPM_RC TSS_Transmit(TSS_CONTEXT *tssContext,
 #endif
 #endif
     }
+    else
+    if (strcmp(tssContext->tssInterfaceType, "skiboot") == 0) {
+#ifdef TPM_SKIBOOT	/* transmit through Skiboot */
+	rc = TSS_Skiboot_Transmit(tssContext, responseBuffer, read,
+				  commandBuffer, written, message);
+#else
+	if (tssVerbose) printf("TSS_Transmit: device %s unsupported\n",
+			       tssContext->tssInterfaceType);
+	rc = TSS_RC_INSUPPORTED_INTERFACE;
+#endif // TPM_SKIBOOT
+    }
     else {
 	if (tssVerbose) printf("TSS_Transmit: device %s unsupported\n",
 			       tssContext->tssInterfaceType);
@@ -180,6 +197,16 @@ TPM_RC TSS_Close(TSS_CONTEXT *tssContext)
 	    rc = TSS_RC_INSUPPORTED_INTERFACE;	
 #endif
 #endif
+	}
+	else
+	if ((strcmp(tssContext->tssInterfaceType, "skiboot") == 0)) {
+#ifdef TPM_SKIBOOT
+	    rc = 0;
+#else
+	    if (tssVerbose) printf("TSS_Transmit: device %s unsupported\n",
+				   tssContext->tssInterfaceType);
+	    rc = TSS_RC_INSUPPORTED_INTERFACE;
+#endif // TPM_SKIBOOT
 	}
 	else {
 	    if (tssVerbose) printf("TSS_Transmit: device %s unsupported\n",
