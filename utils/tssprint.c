@@ -62,6 +62,7 @@ int TSS_SwallowPrintf(const char *format, ...)
 
 #endif
 
+#ifndef TPM_TSS_NOFILE
 /* TSS_Array_Scan() converts a string to a binary array */
 
 uint32_t TSS_Array_Scan(unsigned char **data,	/* output binary, freed by caller */
@@ -97,6 +98,7 @@ uint32_t TSS_Array_Scan(unsigned char **data,	/* output binary, freed by caller 
     }
     return rc;
 }
+#endif /* TPM_TSS_NOFILE */
 
 /* TSS_PrintAll() prints 'string', the length, and then the entire byte array
  */
