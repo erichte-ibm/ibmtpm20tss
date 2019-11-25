@@ -157,6 +157,8 @@ extern "C" {
     
     TPM_RC TSS_EVENT_Line_Unmarshal(TCG_PCR_EVENT *event, BYTE **buffer, uint32_t *size);
 
+    TPM_RC TSS_EVENT_Buffer_Unmarshal(TCG_PCR_EVENT *target, BYTE **buffer, uint32_t *size);
+
     TPM_RC TSS_EVENT_PCR_Extend(TPMT_HA pcrs[IMPLEMENTATION_PCR],
 				TCG_PCR_EVENT *event);
     
@@ -171,7 +173,15 @@ extern "C" {
     TPM_RC TSS_EVENT2_Line_Marshal(TCG_PCR_EVENT2 *source, uint16_t *written,
 				   uint8_t **buffer, uint32_t *size);
 
+    TPM_RC TSS_EVENT2_Buffer_Marshal(TCG_PCR_EVENT2 *source, uint16_t *written,
+				   uint8_t **buffer, uint32_t *size);
+
+
     TPM_RC TSS_EVENT2_Line_Unmarshal(TCG_PCR_EVENT2 *target, BYTE **buffer, uint32_t *size);
+
+    TPM_RC TSS_EVENT2_Buffer_Unmarshal(TCG_PCR_EVENT2 *target, BYTE **buffer, uint32_t *size);
+
+
 
     TPM_RC TSS_EVENT2_PCR_Extend(TPMT_HA pcrs[HASH_COUNT][IMPLEMENTATION_PCR],
 				 TCG_PCR_EVENT2 *event2);
@@ -185,6 +195,16 @@ extern "C" {
     void TSS_SpecIdEvent_Trace(TCG_EfiSpecIDEvent *specIdEvent);
 
     const char *TSS_EVENT_EventTypeToString(uint32_t eventType);
+
+    TPM_RC UINT32LE_Marshal(const UINT32 *source, uint16_t *written,
+                            BYTE **buffer, uint32_t *size);
+
+    TPM_RC TSS_UINT16LE_Marshalu(const UINT16 *source, uint16_t *written,
+                                 BYTE **buffer, uint32_t *size);
+
+    uint32_t TSS_EVENT2_Get_Size(TCG_PCR_EVENT2 *event2);
+
+    uint32_t get_digest_size(TPMI_ALG_HASH alg);
 
 #ifdef __cplusplus
 }
