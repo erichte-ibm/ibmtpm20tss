@@ -1470,7 +1470,7 @@ void TSS_TPMS_ATTEST_Print(TPMS_ATTEST *source, unsigned int indent)
 }
 
 /* Table 127 - Definition of TPM2B_ATTEST Structure <OUT> */
-
+#if 0
 void TSS_TPM2B_ATTEST_Print(TPM2B_ATTEST *source, unsigned int indent)
 {
     TPM_RC			rc = 0;
@@ -1492,6 +1492,7 @@ void TSS_TPM2B_ATTEST_Print(TPM2B_ATTEST *source, unsigned int indent)
     }
     return;
 }
+#endif
 
 /* Table 128 - Definition of TPMS_AUTH_COMMAND Structure <IN> */
 
